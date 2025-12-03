@@ -94,72 +94,8 @@ class _ARQiblaPageState extends State<ARQiblaPage> {
 
               // Loading indicator
               if (state is ARLoading)
-                Center(
-                  child: Container(
-                    margin: const EdgeInsets.all(20),
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.8),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const CircularProgressIndicator(color: Colors.green),
-                        const SizedBox(height: 20),
-                        const Text(
-                          'Initializing AR...',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        const Text(
-                          'Getting GPS location',
-                          style: TextStyle(color: Colors.white70, fontSize: 14),
-                        ),
-                        const SizedBox(height: 8),
-                        const Text(
-                          'This may take 10-30 seconds',
-                          style: TextStyle(color: Colors.white60, fontSize: 12),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 16),
-                        Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: Colors.blue.withValues(alpha: 0.2),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Column(
-                            children: [
-                              Icon(Icons.lightbulb_outline, color: Colors.blue, size: 20),
-                              SizedBox(height: 8),
-                              Text(
-                                'For faster GPS lock:\n• Go outdoors\n• Wait patiently\n• Ensure clear sky view',
-                                style: TextStyle(color: Colors.white70, fontSize: 11),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.white.withValues(alpha: 0.1),
-                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                          ),
-                          child: const Text(
-                            'Cancel',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                const Center(
+                  child: CircularProgressIndicator(color: Colors.green),
                 ),
 
               // Error state
@@ -183,36 +119,23 @@ class _ARQiblaPageState extends State<ARQiblaPage> {
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(),
-                              style: TextButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                              ),
-                              child: const Text('Go Back'),
-                            ),
-                            TextButton(
-                              onPressed: () => _initializeAR(),
-                              style: TextButton.styleFrom(
-                                backgroundColor: Colors.green,
-                                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                              ),
-                              child: const Text(
-                                'Retry',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ],
+                        TextButton(
+                          onPressed: () => _initializeAR(),
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.green,
+                            padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                          ),
+                          child: const Text(
+                            'Retry',
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
 
-              // Top bar with back button and info
+              // Top bar with title
               Positioned(
                 top: 0,
                 left: 0,
@@ -230,25 +153,15 @@ class _ARQiblaPageState extends State<ARQiblaPage> {
                         ],
                       ),
                     ),
-                    child: Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back, color: Colors.white),
-                          onPressed: () => Navigator.of(context).pop(),
+                    child: const Center(
+                      child: Text(
+                        'AR Qibla Direction',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                         ),
-                        const Expanded(
-                          child: Text(
-                            'AR Qibla Direction',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        const SizedBox(width: 48),
-                      ],
+                      ),
                     ),
                   ),
                 ),
