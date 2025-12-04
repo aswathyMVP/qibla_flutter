@@ -1,0 +1,26 @@
+name: qibla_ar_finder_example
+description: Example app demonstrating qibla_ar_finder package
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State management (required for BLoC providers)
+  flutter_bloc: ^8.1.6
+  
+  # Use the package from parent directory
+  qibla_ar_finder:
+    path: ../
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true

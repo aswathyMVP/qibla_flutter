@@ -32,6 +32,7 @@ class VerticalPositionWarning extends StatelessWidget {
                 },
                 child: Image.asset(
                   'assets/images/phone_icon.png',
+                  package: 'qibla_ar_finder',
                   width: 60,
                   height: 120,
                   color: Colors.green,

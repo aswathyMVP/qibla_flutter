@@ -283,6 +283,7 @@ class _ARViewEnhancedAndroidState extends State<ARViewEnhancedAndroid> {
             opacity: 0.8, // Semi-transparent
             child: Image.asset(
               'assets/images/qibla.png',
+              package: 'qibla_ar_finder',
               width: 120,
               height: 150,
               fit: BoxFit.contain,

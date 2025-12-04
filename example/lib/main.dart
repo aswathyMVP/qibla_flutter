@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qibla_ar_finder/qibla_ar_finder.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
   runApp(const QiblaARFinderExample());
 }
 
@@ -43,7 +46,16 @@ class ExampleHomePage extends StatelessWidget {
             color: Colors.blue,
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => const ARViewExample()),
+              MaterialPageRoute(
+                builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider(create: (_) => getIt<QiblaCubit>()),
+                    BlocProvider(create: (_) => getIt<ARCubit>()),
+                    BlocProvider(create: (_) => getIt<TiltCubit>()),
+                  ],
+                  child: const ARQiblaPage(),
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 16),
@@ -55,31 +67,24 @@ class ExampleHomePage extends StatelessWidget {
             color: Colors.green,
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => const CompassViewExample()),
+              MaterialPageRoute(
+                builder: (_) => BlocProvider(
+                  create: (_) => getIt<QiblaCubit>(),
+                  child: const QiblaCompassPage(),
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 16),
           _buildExampleCard(
             context,
-            title: 'Full Featured Page',
-            description: 'Complete page with all features',
-            icon: Icons.dashboard,
+            title: 'Panorama View',
+            description: '360° view with Kaaba',
+            icon: Icons.panorama,
             color: Colors.orange,
             onTap: () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => const QiblaARPage()),
-            ),
-          ),
-          const SizedBox(height: 16),
-          _buildExampleCard(
-            context,
-            title: 'Custom Configuration',
-            description: 'AR view with custom styling',
-            icon: Icons.settings,
-            color: Colors.purple,
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const CustomConfigExample()),
+              MaterialPageRoute(builder: (_) => const PanoramaKaabaPage()),
             ),
           ),
         ],
@@ -107,7 +112,7 @@ class ExampleHomePage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Icon(icon, color: color, size: 32),
@@ -139,79 +144,6 @@ class ExampleHomePage extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-// Example 1: Basic AR View
-class ARViewExample extends StatelessWidget {
-  const ARViewExample({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('AR View Example'),
-      ),
-      body: QiblaARView(
-        onQiblaFound: (direction) {
-          debugPrint('Qibla direction: $direction°');
-        },
-        onError: (error) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: $error')),
-          );
-        },
-      ),
-    );
-  }
-}
-
-// Example 2: Compass View
-class CompassViewExample extends StatelessWidget {
-  const CompassViewExample({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Compass View Example'),
-      ),
-      body: Center(
-        child: QiblaCompass(
-          onDirectionChanged: (direction) {
-            debugPrint('Current heading: $direction°');
-          },
-          showDegrees: true,
-          compassSize: 300,
-        ),
-      ),
-    );
-  }
-}
-
-// Example 3: Custom Configuration
-class CustomConfigExample extends StatelessWidget {
-  const CustomConfigExample({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Custom Configuration'),
-      ),
-      body: QiblaARView(
-        config: ARConfig(
-          showVerticalWarning: true,
-          arrowColor: Colors.amber,
-          kaabaOpacity: 0.9,
-          enableSmoothing: true,
-          smoothingFactor: 0.15,
-        ),
-        onQiblaFound: (direction) {
-          debugPrint('Qibla: $direction°');
-        },
       ),
     );
   }

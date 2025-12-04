@@ -1,71 +1,210 @@
 # Qibla AR Finder
 
-A Flutter-based Qibla direction finder using AR, compass, and GPS for both Android and iOS.
+A professional Flutter package for finding Qibla direction using AR, compass, and GPS. Supports both Android and iOS.
 
-## 🎯 What is This?
+## Features
 
-Find the direction to Kaaba (Mecca) for prayer using:
-- 📱 **AR View** - Camera overlay with Kaaba positioned in real direction
-- 🧭 **Compass** - Traditional compass with Qibla indicator  
-- 📍 **GPS** - Automatic location detection
-- ✅ **Cross-platform** - Works on Android and iOS
+- 🕌 **AR View** - Augmented reality with camera overlay showing Kaaba direction
+- 🧭 **Compass View** - Traditional compass with Qibla indicator
+- 🌐 **Panorama View** - 360° view with Kaaba
+- 📍 **GPS Location** - Automatic location detection
+- 📱 **Cross-platform** - Works on Android (Camera AR) and iOS (ARKit)
+- ⚠️ **Vertical Warning** - Alerts when device is not held vertically
+- 🎯 **Accurate** - Uses Haversine formula for precise bearing calculation
 
-## 🚀 Quick Start
+## Installation
 
-```bash
-# Install dependencies
-flutter pub get
-
-# Run the app
-flutter run
-```
-
-## 📦 Use as Package
-
-This can be used as a reusable package in other Flutter projects:
+Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
   qibla_ar_finder:
     git:
-      url: https://github.com/YOUR_ORG/qibla_ar_finder.git
+      url: https://github.com/yourusername/qibla_ar_finder.git
 ```
+
+Or for a specific version:
+
+```yaml
+dependencies:
+  qibla_ar_finder:
+    git:
+      url: https://github.com/yourusername/qibla_ar_finder.git
+      ref: v1.0.0
+```
+
+## Platform Setup
+
+### Android
+
+Add to `android/app/src/main/AndroidManifest.xml`:
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-feature android:name="android.hardware.camera" />
+<uses-feature android:name="android.hardware.sensor.accelerometer" />
+<uses-feature android:name="android.hardware.sensor.compass" />
+```
+
+### iOS
+
+Add to `ios/Runner/Info.plist`:
+
+```xml
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>We need your location to calculate Qibla direction</string>
+<key>NSCameraUsageDescription</key>
+<string>Camera is required for AR view</string>
+<key>arkit</key>
+<string>Required for AR features</string>
+```
+
+Minimum iOS version: 11.0 (for ARKit support)
+
+## Usage
+
+### Basic Setup
 
 ```dart
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qibla_ar_finder/qibla_ar_finder.dart';
 
-// Use with configurable UI
-QiblaARPage(
-  config: ARPageConfig(
-    showTopBar: false,
-    showInstructions: false,
-  ),
-)
+void main() {
+  // Initialize dependency injection
+  configureDependencies();
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: QiblaFinderPage(),
+    );
+  }
+}
 ```
 
-## 📖 Complete Documentation
+### AR View
 
-**See [PROJECT_GUIDE.md](PROJECT_GUIDE.md) for:**
-- Architecture details
-- Package usage guide
-- Development setup
-- Maintenance guide
-- Troubleshooting
-- Customization options
+```dart
+class QiblaFinderPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => getIt<QiblaCubit>()),
+        BlocProvider(create: (_) => getIt<ARCubit>()),
+        BlocProvider(create: (_) => getIt<TiltCubit>()),
+      ],
+      child: ARQiblaPage(),
+    );
+  }
+}
+```
 
-## 🛠️ Key Features
+### Compass View
 
-- ✅ AR-based Qibla detection
-- ✅ Real-time compass tracking
-- ✅ GPS location calculation
-- ✅ Vertical position warnings
-- ✅ Smooth animations (reduced jitter)
-- ✅ Configurable UI elements
-- ✅ Permission handling
+```dart
+class CompassPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => getIt<QiblaCubit>(),
+      child: QiblaCompassPage(),
+    );
+  }
+}
+```
 
-## 📄 License
+### Panorama View
 
-MIT License
+```dart
+class PanoramaPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return PanoramaKaabaPage();
+  }
+}
+```
+
+## Example
+
+See the [example](example/) folder for a complete working app demonstrating all features.
+
+To run the example:
+
+```bash
+cd example
+flutter run
+```
+
+## How It Works
+
+1. **GPS Detection** - Gets user's latitude/longitude using `geolocator`
+2. **Qibla Calculation** - Calculates bearing to Kaaba (21.422504°N, 39.826195°E) using Haversine formula
+3. **Compass Tracking** - Monitors device heading using magnetometer
+4. **AR Rendering** - Positions Kaaba image in calculated direction
+5. **Smoothing** - Applies filters to reduce jitter
+
+## Requirements
+
+- Flutter SDK: >=3.0.0
+- Dart SDK: >=3.0.0
+- Android: minSdkVersion 21
+- iOS: 11.0+ (for ARKit)
+
+## Dependencies
+
+- `flutter_bloc` - State management
+- `get_it` - Dependency injection
+- `geolocator` - GPS location
+- `flutter_compass` - Compass/magnetometer
+- `sensors_plus` - Accelerometer/gyroscope
+- `camera` - Camera for AR (Android)
+- `arkit_plugin` - ARKit (iOS)
+- `permission_handler` - Runtime permissions
+
+## Permissions
+
+The package requires the following permissions:
+
+- **Location** - To calculate Qibla direction
+- **Camera** - For AR view
+- **Sensors** - For device orientation
+
+Permissions are requested automatically at runtime.
+
+## Troubleshooting
+
+### GPS not working
+- Ensure location permissions are granted
+- Go outdoors for better GPS signal
+- Check that location services are enabled
+
+### AR view shows black screen
+- Verify camera permissions are granted
+- Ensure device supports AR (ARKit for iOS)
+- Check platform-specific setup is correct
+
+### Compass inaccurate
+- Calibrate compass by moving device in figure-8 pattern
+- Keep device away from magnetic interference
+- Ensure sensor permissions are granted
+
+## License
+
+MIT License - See [LICENSE](LICENSE) file for details
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Support
+
+For issues or questions, please open an issue on [GitHub](https://github.com/yourusername/qibla_ar_finder/issues).
 
 ---
 

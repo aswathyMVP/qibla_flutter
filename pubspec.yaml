@@ -1,10 +1,13 @@
-name: qibla_finder
-description: A Qibla direction finder app using AR and compass
-publish_to: 'none'
-version: 1.0.0+1
+name: qibla_ar_finder
+description: A professional Flutter package for finding Qibla direction using AR, compass, and 360° panorama views. Supports both Android and iOS with automatic GPS location detection.
+version: 1.0.0
+homepage: https://github.com/yourusername/qibla_ar_finder
+repository: https://github.com/yourusername/qibla_ar_finder
+issue_tracker: https://github.com/yourusername/qibla_ar_finder/issues
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.0.0'
 
 dependencies:
   flutter:
@@ -23,15 +26,11 @@ dependencies:
   sensors_plus: ^6.1.1
   permission_handler: ^11.3.1
   
-  # Camera
+  # Camera (for Android AR)
   camera: ^0.11.3
   
-  # AR Plugins
-  # arcore_flutter_plugin: ^0.1.0  # Temporarily disabled due to compatibility issues
+  # AR Plugin (for iOS)
   arkit_plugin: ^1.0.7
-  
-  # 360° Panorama
-  # panorama: ^0.4.1  # Temporarily disabled due to compatibility issues
   
   # Utilities
   vector_math: ^2.1.4
@@ -43,9 +42,10 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 flutter:
-  uses-material-design: true
-  
   assets:
     - assets/images/
-    - assets/models/
-    - assets/panorama/
+
+# Platform support
+platforms:
+  android:
+  ios:

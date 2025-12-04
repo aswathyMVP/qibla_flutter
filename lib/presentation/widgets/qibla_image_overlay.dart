@@ -14,6 +14,7 @@ class QiblaImageOverlay extends StatelessWidget {
           curve: Curves.easeOut,
           child: Image.asset(
             'assets/images/qibla.png',
+            package: 'qibla_ar_finder',
             width: 200,
             height: 290,
             fit: BoxFit.contain,
