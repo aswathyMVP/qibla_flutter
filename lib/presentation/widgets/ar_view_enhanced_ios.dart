@@ -183,8 +183,7 @@ class _ARViewEnhancedIOSState extends State<ARViewEnhancedIOS> {
     while (angleDiff > 180) angleDiff -= 360;
     while (angleDiff < -180) angleDiff += 360;
 
-    final shouldShowLeftArrow = angleDiff < -5; // More than 5° to the left
-    final shouldShowRightArrow = angleDiff > 5; // More than 5° to the right
+
 
     return Stack(
       children: [
@@ -196,8 +195,8 @@ class _ARViewEnhancedIOSState extends State<ARViewEnhancedIOS> {
           showFeaturePoints: false,
         ),
 
-        // Left/Right arrow hints (like iOS project)
-        if (shouldShowLeftArrow || shouldShowRightArrow)
+        // Left/Right arrow hints for navigation
+        if (angleDiff < -5 || angleDiff > 5)
           Positioned(
             top: MediaQuery.of(context).size.height / 2 - 100,
             left: 0,
@@ -205,7 +204,7 @@ class _ARViewEnhancedIOSState extends State<ARViewEnhancedIOS> {
             child: Column(
               children: [
                 Text(
-                  shouldShowLeftArrow ? 'Move Left' : 'Move Right',
+                  angleDiff < -5 ? 'Move Left' : 'Move Right',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -220,7 +219,7 @@ class _ARViewEnhancedIOSState extends State<ARViewEnhancedIOS> {
                 ),
                 const SizedBox(height: 10),
                 Icon(
-                  shouldShowLeftArrow
+                  angleDiff < -5
                       ? Icons.arrow_circle_left
                       : Icons.arrow_circle_right,
                   color: Colors.green,

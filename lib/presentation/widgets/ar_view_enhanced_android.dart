@@ -183,8 +183,7 @@ class _ARViewEnhancedAndroidState extends State<ARViewEnhancedAndroid> {
     while (angleDiff > 180) angleDiff -= 360;
     while (angleDiff < -180) angleDiff += 360;
     
-    final shouldShowLeftArrow = angleDiff < -5; // More than 5° to the left
-    final shouldShowRightArrow = angleDiff > 5; // More than 5° to the right
+
 
     return Stack(
       children: [
@@ -208,8 +207,8 @@ class _ARViewEnhancedAndroidState extends State<ARViewEnhancedAndroid> {
           child: _buildKaabaOverlay(),
         ),
         
-        // Left/Right arrow hints (like iOS)
-        if (shouldShowLeftArrow || shouldShowRightArrow)
+        // Left/Right arrow hints for navigation
+        if (angleDiff < -5 || angleDiff > 5)
           Positioned(
             top: screenSize.height / 2 - 100,
             left: 0,
@@ -217,7 +216,7 @@ class _ARViewEnhancedAndroidState extends State<ARViewEnhancedAndroid> {
             child: Column(
               children: [
                 Text(
-                  shouldShowLeftArrow ? 'Move Left' : 'Move Right',
+                  angleDiff < -5 ? 'Move Left' : 'Move Right',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -232,7 +231,7 @@ class _ARViewEnhancedAndroidState extends State<ARViewEnhancedAndroid> {
                 ),
                 const SizedBox(height: 10),
                 Icon(
-                  shouldShowLeftArrow 
+                  angleDiff < -5 
                       ? Icons.arrow_circle_left 
                       : Icons.arrow_circle_right,
                   color: Colors.green,
