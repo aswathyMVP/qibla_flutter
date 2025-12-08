@@ -1,11 +1,11 @@
-package com.example.qibla_finder
+package com.example.qibla_ar_finder
 
 import android.content.Intent
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel
 
-class MainActivity : FlutterActivity() {
+class MainActivity: FlutterActivity() {
     private val CHANNEL = "com.example.qibla_ar_finder/ar"
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
