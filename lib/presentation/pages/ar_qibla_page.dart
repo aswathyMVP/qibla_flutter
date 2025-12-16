@@ -22,12 +22,13 @@ class ARPageConfig {
   
   /// Custom title text (if showTopBar is true)
   final String? customTitle;
-
+final Color primaryColor;
   const ARPageConfig({
     this.showTopBar = false,
     this.showInstructions = false,
     this.showCompassIndicators = true,
     this.customTitle,
+   required this.primaryColor,
   });
 }
 
@@ -37,7 +38,7 @@ class ARQiblaPage extends StatefulWidget {
 
   const ARQiblaPage({
     super.key,
-    this.config = const ARPageConfig(),
+    required this.config,
   });
 
   @override
@@ -113,11 +114,13 @@ class _ARQiblaPageState extends State<ARQiblaPage> {
                         qiblaBearing: _qiblaBearing ?? 0,
                         deviceHeading: _deviceHeading ?? 0,
                         showOverlay: widget.config.showTopBar,
+                        primaryColor: widget.config.primaryColor,
                       )
                     : ARViewEnhancedIOS(
                         qiblaBearing: _qiblaBearing ?? 0,
                         deviceHeading: _deviceHeading ?? 0,
                         showOverlay: widget.config.showTopBar,
+                        primaryColor: widget.config.primaryColor,
                       ),
 
               // Loading indicator

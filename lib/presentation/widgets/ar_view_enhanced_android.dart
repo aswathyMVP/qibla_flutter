@@ -11,12 +11,14 @@ class ARViewEnhancedAndroid extends StatefulWidget {
   final double qiblaBearing;
   final double deviceHeading;
   final bool showOverlay;
+  final Color primaryColor;
 
   const ARViewEnhancedAndroid({
     super.key,
     required this.qiblaBearing,
     required this.deviceHeading,
     required this.showOverlay,
+   required  this.primaryColor,
   });
 
   @override
@@ -106,8 +108,8 @@ class _ARViewEnhancedAndroidState extends State<ARViewEnhancedAndroid> {
         else
           Container(
             color: Colors.black,
-            child: const Center(
-              child: CircularProgressIndicator(color: Colors.green),
+            child:  Center(
+              child: CircularProgressIndicator(color:widget. primaryColor),
             ),
           ),
 
@@ -138,7 +140,7 @@ class _ARViewEnhancedAndroidState extends State<ARViewEnhancedAndroid> {
                   angleDiff < -5
                       ? Icons.arrow_circle_left
                       : Icons.arrow_circle_right,
-                  color: Colors.green,
+                  color: widget. primaryColor,
                   size: 100,
                   shadows: const [
                     Shadow(
@@ -180,7 +182,7 @@ class _ARViewEnhancedAndroidState extends State<ARViewEnhancedAndroid> {
           _buildInfoChip(
               'You', '${_currentHeading.toStringAsFixed(0)}°', Colors.blue),
           _buildInfoChip('Qibla', '${widget.qiblaBearing.toStringAsFixed(0)}°',
-              Colors.green),
+              widget.primaryColor),
         ],
       ),
     );

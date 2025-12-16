@@ -20,32 +20,12 @@ class VerticalPositionWarning extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TweenAnimationBuilder<double>(
-                tween: Tween(begin: -15.0, end: 15.0),
-                duration: const Duration(milliseconds: 800),
-                curve: Curves.easeInOut,
-                builder: (context, value, child) {
-                  return Transform.rotate(
-                    angle: (animate ? value : -value) * 0.0174533, // Convert to radians
-                    child: child,
-                  );
-                },
-                child: Image.asset(
-                  'assets/images/phone_icon.png',
-                  package: 'qibla_ar_finder',
-                  width: 60,
-                  height: 120,
-                  color: Colors.green,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(
-                      Icons.phone_android,
-                      size: 120,
-                      color: Colors.green,
-                    );
-                  },
-                ),
+              Image.asset(
+                'assets/images/Phone_icon.png',
+                package: 'qibla_ar_finder',
+                width: 80,
+                height: 180,
               ),
-              const SizedBox(height: 40),
               Container(
                 padding: const EdgeInsets.all(20),
                 margin: const EdgeInsets.symmetric(horizontal: 30),

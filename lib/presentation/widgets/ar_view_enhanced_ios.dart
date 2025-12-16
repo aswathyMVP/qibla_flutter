@@ -12,11 +12,14 @@ class ARViewEnhancedIOS extends StatefulWidget {
   final double qiblaBearing;
   final double deviceHeading;
   final bool showOverlay;
-  const ARViewEnhancedIOS(
-      {super.key,
-      required this.qiblaBearing,
-      required this.deviceHeading,
-      required this.showOverlay});
+  final Color primaryColor;
+  const ARViewEnhancedIOS({
+    super.key,
+    required this.qiblaBearing,
+    required this.deviceHeading,
+    required this.showOverlay,
+   required this.primaryColor,
+  });
 
   @override
   State<ARViewEnhancedIOS> createState() => _ARViewEnhancedIOSState();
@@ -157,9 +160,10 @@ class _ARViewEnhancedIOSState extends State<ARViewEnhancedIOS> {
         height: 0.2,
         materials: [
           ARKitMaterial(
-            diffuse: ARKitMaterialProperty.color(Colors.green),
+            diffuse: ARKitMaterialProperty.color(widget.primaryColor),
             emission: ARKitMaterialProperty.color(
-                Colors.green.withValues(alpha: 0.5)),
+              widget.primaryColor.withValues(alpha: 0.5),
+            ),
           ),
         ],
       ),
@@ -182,8 +186,6 @@ class _ARViewEnhancedIOSState extends State<ARViewEnhancedIOS> {
     double angleDiff = widget.qiblaBearing - _currentHeading;
     while (angleDiff > 180) angleDiff -= 360;
     while (angleDiff < -180) angleDiff += 360;
-
-
 
     return Stack(
       children: [
@@ -222,7 +224,7 @@ class _ARViewEnhancedIOSState extends State<ARViewEnhancedIOS> {
                   angleDiff < -5
                       ? Icons.arrow_circle_left
                       : Icons.arrow_circle_right,
-                  color: Colors.green,
+                  color: widget.primaryColor,
                   size: 100,
                   shadows: const [
                     Shadow(
@@ -264,7 +266,7 @@ class _ARViewEnhancedIOSState extends State<ARViewEnhancedIOS> {
           _buildInfoChip(
               'You', '${_currentHeading.toStringAsFixed(0)}°', Colors.blue),
           _buildInfoChip('Qibla', '${widget.qiblaBearing.toStringAsFixed(0)}°',
-              Colors.green),
+              widget.primaryColor),
         ],
       ),
     );
@@ -300,15 +302,15 @@ class _ARViewEnhancedIOSState extends State<ARViewEnhancedIOS> {
   // Build Kaaba positioned overlay based on Qibla direction
   Widget _buildKaabaPositionedOverlay(double angleDiff, BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
-    
+
     // Calculate position based on angle difference
     const fovHorizontal = 70.0;
     final horizontalPixelsPerDegree = screenSize.width / fovHorizontal;
-    
+
     // Calculate horizontal offset
     final horizontalOffset = angleDiff * horizontalPixelsPerDegree;
     final xPosition = (screenSize.width / 2) + horizontalOffset;
-    
+
     return Positioned(
       left: xPosition - 60, // Center the Kaaba
       top: screenSize.height / 2 - 75, // Center vertically
