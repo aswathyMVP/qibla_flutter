@@ -24,3 +24,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - packages/qibla_ar_finder/assets/images/
+    - packages/qibla_ar_finder/assets/models/
