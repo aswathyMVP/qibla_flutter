@@ -52,3 +52,9 @@ export 'presentation/cubits/ar_cubit.dart';
 export 'presentation/cubits/ar_state.dart';
 export 'presentation/cubits/tilt_cubit.dart';
 export 'presentation/cubits/tilt_state.dart';
+
+// Services
+export 'services/qiblah_service.dart';
+
+// Utils
+export 'utils/qiblah_utils.dart';
