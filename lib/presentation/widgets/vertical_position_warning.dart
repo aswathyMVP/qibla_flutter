@@ -30,6 +30,7 @@ class VerticalPositionWarning extends StatelessWidget {
                 width: 80,
                 height: 180,
               ),
+              const SizedBox(height: 20),
               Container(
                 padding: const EdgeInsets.all(20),
                 margin: const EdgeInsets.symmetric(horizontal: 30),
