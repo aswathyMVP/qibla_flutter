@@ -353,7 +353,7 @@ class _ARQiblaPageState extends State<ARQiblaPage> {
           // Show warning when phone is not vertical
           if (tiltState is TiltNotVertical) {
             return Container(
-                margin: const EdgeInsets.only(top: 45),
+                margin: const EdgeInsets.only(top: 50),
                 child: VerticalPositionWarning(
                   animate: tiltState.animateIcon,
                   message: widget.config.message,
