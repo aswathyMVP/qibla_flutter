@@ -7,6 +7,7 @@ import '../../domain/entities/location_data.dart';
 import '../../domain/usecases/get_user_location.dart';
 import '../../domain/usecases/get_ar_qibla_bearing.dart';
 import '../../domain/usecases/get_device_heading.dart';
+import '../../services/ar_initialization_manager.dart';
 import 'ar_state.dart';
 
 class ARCubit extends Cubit<ARState> {
@@ -26,6 +27,39 @@ class ARCubit extends Cubit<ARState> {
   double? _deviceHeading;
 
   Future<void> initializeAR({double? existingQiblaBearing}) async {
+    // Check if AR is already pre-initialized by ARInitializationManager
+    final initManager = ARInitializationManager.instance;
+    
+    if (initManager.state.isInitialized) {
+      debugPrint('AR: Using pre-initialized state from ARInitializationManager');
+      _userLocation = initManager.state.userLocation;
+      _qiblaBearing = initManager.state.qiblaBearing;
+      _deviceHeading = initManager.state.deviceHeading;
+      
+      emit(ARReady());
+      return;
+    }
+
+    if (initManager.state.isInitializing) {
+      debugPrint('AR: ARInitializationManager is initializing, waiting...');
+      emit(ARLoading());
+      
+      // Wait for initialization to complete
+      await initManager.stateStream.firstWhere((s) => !s.isInitializing);
+      
+      if (initManager.state.isInitialized) {
+        _userLocation = initManager.state.userLocation;
+        _qiblaBearing = initManager.state.qiblaBearing;
+        _deviceHeading = initManager.state.deviceHeading;
+        emit(ARReady());
+      } else {
+        emit(ARError(initManager.state.errorMessage ?? 'AR initialization failed'));
+      }
+      return;
+    }
+
+    // Fallback: Initialize AR directly if not pre-initialized
+    debugPrint('AR: No pre-initialization found, initializing directly...');
     emit(ARLoading());
 
     try {

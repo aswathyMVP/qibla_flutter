@@ -55,6 +55,7 @@ export 'presentation/cubits/tilt_state.dart';
 
 // Services
 export 'services/qiblah_service.dart';
+export 'services/ar_initialization_manager.dart';
 
 // Utils
 export 'utils/qiblah_utils.dart';

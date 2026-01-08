@@ -9,6 +9,7 @@ import '../../domain/usecases/get_user_location.dart';
 import '../../domain/usecases/get_ar_qibla_bearing.dart';
 import '../../presentation/cubits/ar_cubit.dart';
 import '../../presentation/cubits/tilt_cubit.dart';
+import '../../services/ar_initialization_manager.dart';
 
 final getIt = GetIt.instance;
 
@@ -30,4 +31,11 @@ void configureDependencies() {
     getDeviceHeading: getIt(),
   ));
   getIt.registerFactory(() => TiltCubit(getDeviceTilt: getIt()));
+  
+  // Configure AR Initialization Manager with dependencies
+  ARInitializationManager.instance.configureDependencies(
+    getUserLocation: getIt(),
+    getARQiblaBearing: getIt(),
+    getDeviceHeading: getIt(),
+  );
 }

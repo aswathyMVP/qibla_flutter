@@ -11,6 +11,7 @@ A professional Flutter package for finding Qibla direction using AR, compass, an
 - 📱 **Cross-platform** - Works on Android (Camera AR) and iOS (ARKit)
 - ⚠️ **Vertical Warning** - Alerts when device is not held vertically
 - 🎯 **Accurate** - Uses Haversine formula for precise bearing calculation
+- ⚡ **Pre-Initialization** - Initialize AR during app startup for instant loading
 
 ## Installation
 
@@ -87,6 +88,31 @@ class MyApp extends StatelessWidget {
 }
 ```
 
+### AR Pre-Initialization (Recommended)
+
+For instant AR loading, initialize AR during app startup:
+
+```dart
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize dependency injection
+  configureDependencies();
+  
+  // Pre-initialize AR (eliminates loading when AR screen opens)
+  ARInitializationManager.instance.initialize();
+  
+  runApp(MyApp());
+}
+```
+
+**Benefits:**
+- ✅ No loading indicator when AR screen opens
+- ✅ Better user experience
+- ✅ AR ready when user needs it
+
+See [AR Pre-Initialization Guide](AR_PREINITIALIZATION_GUIDE.md) for detailed usage patterns.
+
 ### AR View
 
 ```dart
@@ -95,11 +121,20 @@ class QiblaFinderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => getIt<QiblaCubit>()),
         BlocProvider(create: (_) => getIt<ARCubit>()),
         BlocProvider(create: (_) => getIt<TiltCubit>()),
       ],
-      child: ARQiblaPage(),
+      child: ARQiblaPage(
+        config: ARPageConfig(
+          primaryColor: Colors.green,
+          showTopBar: true,
+          showInstructions: true,
+          showCompassIndicators: true,
+          moveRightText: 'Turn Right',
+          moveLeftText: 'Turn Left',
+          message: 'Hold phone vertically',
+        ),
+      ),
     );
   }
 }
@@ -140,6 +175,36 @@ To run the example:
 cd example
 flutter run
 ```
+
+To run the AR pre-initialization example:
+
+```bash
+cd example
+flutter run -t lib/main_with_preinitialization.dart
+```
+
+See [Pre-Initialization Example Guide](example/PREINITIALIZATION_EXAMPLE.md) for details.
+
+## Documentation
+
+### AR Pre-Initialization Feature
+
+The package now supports pre-initializing AR during app startup for instant loading:
+
+| Document | Description | Audience |
+|----------|-------------|----------|
+| [📋 Summary](AR_PREINITIALIZATION_SUMMARY.md) | Feature overview and benefits | Everyone |
+| [🚀 Quick Start](AR_PREINITIALIZATION_QUICK_START.md) | 5-minute setup guide | Developers |
+| [📖 Complete Guide](AR_PREINITIALIZATION_GUIDE.md) | Detailed usage patterns | Developers |
+| [🔄 Migration Guide](MIGRATION_TO_PREINITIALIZATION.md) | Upgrade existing projects | Existing Users |
+| [🏗️ Architecture](AR_PREINITIALIZATION_ARCHITECTURE.md) | Technical implementation | Advanced Users |
+| [💡 Example](example/PREINITIALIZATION_EXAMPLE.md) | Working example walkthrough | Developers |
+| [✅ Checklist](AR_PREINITIALIZATION_CHECKLIST.md) | Implementation checklist | Teams |
+
+### Technical Documentation
+
+- 🏗️ [Technical Architecture](ARCORE_TECHNICAL_ARCHITECTURE.md) - AR implementation details
+- 📝 [Implementation Summary](ARCORE_IMPLEMENTATION_SUMMARY.md) - Implementation overview
 
 ## How It Works
 
