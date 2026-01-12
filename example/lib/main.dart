@@ -105,71 +105,71 @@ class HomeScreen extends StatelessWidget {
             
             const SizedBox(height: 20),
             
-            // Loading Comparison Screen
-            ElevatedButton.icon(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const LoadingComparisonScreen(),
-                  ),
-                );
-              },
-              icon: const Icon(Icons.compare_arrows),
-              label: const Text('Compare Loading Speed'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple,
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                textStyle: const TextStyle(fontSize: 18),
-              ),
-            ),
+            // // Loading Comparison Screen
+            // ElevatedButton.icon(
+            //   onPressed: () {
+            //     Navigator.of(context).push(
+            //       MaterialPageRoute(
+            //         builder: (_) => const LoadingComparisonScreen(),
+            //       ),
+            //     );
+            //   },
+            //   icon: const Icon(Icons.compare_arrows),
+            //   label: const Text('Compare Loading Speed'),
+            //   style: ElevatedButton.styleFrom(
+            //     backgroundColor: Colors.purple,
+            //     foregroundColor: Colors.white,
+            //     padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+            //     textStyle: const TextStyle(fontSize: 18),
+            //   ),
+            // ),
             
-            const SizedBox(height: 40),
+            // const SizedBox(height: 40),
             
-            // Individual buttons
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const FixedQiblaScreen(),
-                        ),
-                      );
-                    },
-                    icon: const Icon(Icons.explore),
-                    label: const Text('Fixed'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => const OptimizedQiblaScreen(),
-                        ),
-                      );
-                    },
-                    icon: const Icon(Icons.speed),
-                    label: const Text('Fast'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            // // Individual buttons
+            // Row(
+            //   children: [
+            //     Expanded(
+            //       child: ElevatedButton.icon(
+            //         onPressed: () {
+            //           Navigator.of(context).push(
+            //             MaterialPageRoute(
+            //               builder: (_) => const FixedQiblaScreen(),
+            //             ),
+            //           );
+            //         },
+            //         icon: const Icon(Icons.explore),
+            //         label: const Text('Fixed'),
+            //         style: ElevatedButton.styleFrom(
+            //           backgroundColor: Colors.blue,
+            //           foregroundColor: Colors.white,
+            //           padding: const EdgeInsets.symmetric(vertical: 12),
+            //         ),
+            //       ),
+            //     ),
+            //     const SizedBox(width: 10),
+            //     Expanded(
+            //       child: ElevatedButton.icon(
+            //         onPressed: () {
+            //           Navigator.of(context).push(
+            //             MaterialPageRoute(
+            //               builder: (_) => const OptimizedQiblaScreen(),
+            //             ),
+            //           );
+            //         },
+            //         icon: const Icon(Icons.speed),
+            //         label: const Text('Fast'),
+            //         style: ElevatedButton.styleFrom(
+            //           backgroundColor: Colors.orange,
+            //           foregroundColor: Colors.white,
+            //           padding: const EdgeInsets.symmetric(vertical: 12),
+            //         ),
+            //       ),
+            //     ),
+            //   ],
+            // ),
             
-            const SizedBox(height: 20),
+            // const SizedBox(height: 20),
             
             // Manual Retry Button
             // ElevatedButton.icon(
