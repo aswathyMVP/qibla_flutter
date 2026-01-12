@@ -10,6 +10,7 @@ import '../../domain/usecases/get_ar_qibla_bearing.dart';
 import '../../presentation/cubits/ar_cubit.dart';
 import '../../presentation/cubits/tilt_cubit.dart';
 import '../../services/ar_initialization_manager.dart';
+import '../../services/qibla_initialization_manager.dart';
 
 final getIt = GetIt.instance;
 
@@ -37,5 +38,11 @@ void configureDependencies() {
     getUserLocation: getIt(),
     getARQiblaBearing: getIt(),
     getDeviceHeading: getIt(),
+  );
+  
+  // Configure Qibla Initialization Manager with dependencies
+  QiblaInitializationManager.instance.configureDependencies(
+    getUserLocation: getIt(),
+    getARQiblaBearing: getIt(),
   );
 }
